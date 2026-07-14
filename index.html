@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ========================================== -->
+    <!-- META TAGS PARA GOOGLE (CONFIGURABLES)      -->
+    <!-- ========================================== -->
+    <title id="metaTitulo">superOnline - Catálogo de Productos</title>
+    <meta name="description" id="metaDescripcion" content="Descubre el catálogo de superOnline con productos de tecnología, hogar, deportes y moda. Calidad y precio en un solo lugar.">
+    <meta name="keywords" id="metaKeywords" content="catálogo, productos, tecnología, hogar, deportes, moda, superOnline, compras online">
+    <meta name="robots" content="index, follow">
+    <meta name="author" id="metaAutor" content="superOnline">
+    <meta name="language" content="Spanish">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" id="ogUrl" content="">
+    <meta property="og:title" id="ogTitulo" content="superOnline - Catálogo de Productos">
+    <meta property="og:description" id="ogDescripcion" content="Descubre el catálogo de superOnline con productos de tecnología, hogar, deportes y moda.">
+    <meta property="og:image" id="ogImagen" content="imagenes/banner.jpg">
+    <meta property="og:site_name" id="ogSiteName" content="superOnline">
+    <meta property="og:locale" content="es_ES">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" id="twitterUrl" content="">
+    <meta name="twitter:title" id="twitterTitulo" content="superOnline - Catálogo de Productos">
+    <meta name="twitter:description" id="twitterDescripcion" content="Descubre el catálogo de superOnline con productos de tecnología, hogar, deportes y moda.">
+    <meta name="twitter:image" id="twitterImagen" content="imagenes/banner.jpg">
+    
+    <!-- Datos estructurados JSON-LD para Google -->
+    <script type="application/ld+json" id="jsonLd">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "superOnline",
+            "url": "",
+            "description": "Descubre el catálogo de superOnline con productos de tecnología, hogar, deportes y moda."
+        }
+    </script>
+
+    <style>
+        /* --- Reset y Estilos Globales --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+        }
+
+        /* --- PANTALLA DE BLOQUEO --- */
+        .pantalla-bloqueo {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .pantalla-bloqueo.activo {
+            display: flex;
+        }
+
+        .pantalla-bloqueo .icono-bloqueo {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .pantalla-bloqueo h2 {
+            color: white;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .pantalla-bloqueo p {
+            color: #ccc;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            max-width: 400px;
+        }
+
+        .pantalla-bloqueo .btn-contacto-bloqueo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+
+        /* --- BANNER 50% (150px) SIN BOTÓN --- */
+        .banner-negocio {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-contenido {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 15px 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-contenido h1 {
+            font-size: 1.8em;
+            margin-bottom: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .banner-contenido .banner-descripcion {
+            font-size: 0.95em;
+            margin-bottom: 5px;
+            opacity: 0.95;
+        }
+
+        /* --- HEADER CATÁLOGO --- */
+        .header-catalogo {
+            text-align: center;
+            padding: 20px 20px 5px;
+            color: #333;
+        }
+
+        .header-catalogo h2 {
+            font-size: 1.5em;
+            margin-bottom: 3px;
+        }
+
+        .header-catalogo p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* --- GALERÍA DE PRODUCTOS --- */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        .producto-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .producto-item:active {
+            transform: scale(0.97);
+        }
+
+        .producto-item .producto-imagen-galeria {
+            width: 100%;
+            height: 160px;
+            background: #f0f0f0;
+            overflow: hidden;
+        }
+
+        .producto-item .producto-imagen-galeria img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .producto-item:hover .producto-imagen-galeria img {
+            transform: scale(1.05);
+        }
+
+        .producto-item .producto-nombre-galeria {
+            padding: 10px 12px;
+            text-align: center;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+            background: white;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .producto-item .producto-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            font-size: 1.3em;
+        }
+
+        .producto-item:hover .producto-overlay {
+            opacity: 1;
+        }
+
+        /* --- MODAL POP UP --- */
+        .modal-producto {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            animation: fadeIn 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-producto.activo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-producto-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-producto-content .modal-imagen {
+            width: 100%;
+            height: 350px;
+            background: #f0f0f0;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-producto-content .modal-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-producto-content .modal-detalles {
+            padding: 25px 30px;
+        }
+
+        .modal-producto-content .modal-detalles h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .modal-producto-content .modal-detalles .modal-referencia {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .modal-producto-content .modal-detalles .modal-descripcion {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .modal-producto-content .modal-detalles .modal-precio {
+            font-size: 2em;
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 8px;
+        }
+
+        .modal-producto-content .modal-detalles .modal-tipo {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-bottom: 20px;
+        }
+
+        .modal-producto-content .modal-detalles .modal-botones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .modal-producto-content .modal-detalles .btn-solicitar-modal {
+            flex: 1;
+            padding: 14px 25px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+
+        .modal-producto-content .modal-detalles .btn-solicitar-modal:active {
+            transform: scale(0.97);
+        }
+
+        .modal-producto-content .modal-detalles .btn-regresar {
+            padding: 14px 25px;
+            background: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+
+        .modal-producto-content .modal-detalles .btn-regresar:active {
+            transform: scale(0.97);
+            background: #ccc;
+        }
+
+        .modal-producto-content .btn-cerrar-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .modal-producto-content .btn-cerrar-modal:hover {
+            background: rgba(0,0,0,0.8);
+            transform: scale(1.1);
+        }
+
+        /* --- MODAL DE CONTACTO --- */
+        .modal-contacto {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-contacto.activo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-contacto-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-contacto-content h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.3em;
+        }
+
+        .modal-contacto-content #productoSeleccionado {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        .modal-contacto-content .contacto-opciones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-contacto-content .btn-whatsapp,
+        .modal-contacto-content .btn-email {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .modal-contacto-content .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .modal-contacto-content .btn-email {
+            background: #667eea;
+            color: white;
+        }
+
+        .modal-contacto-content .btn-cerrar-contacto {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #999;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        /* --- BOTÓN COMPARTIR FLOTANTE --- */
+        .btn-compartir-flotante {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 500;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.5);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-compartir-flotante:active {
+            transform: scale(0.95);
+        }
+
+        /* --- MAPA / UBICACIÓN AL FINAL --- */
+        .seccion-ubicacion {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px 30px;
+        }
+
+        .seccion-ubicacion .ubicacion-container {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .seccion-ubicacion .ubicacion-container h3 {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .seccion-ubicacion .ubicacion-container p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .seccion-ubicacion .ubicacion-container .btn-mapa {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1em;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .seccion-ubicacion .ubicacion-container .btn-mapa:active {
+            transform: scale(0.95);
+        }
+
+        .seccion-ubicacion .ubicacion-container .mapa-visual {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            background: #e8ecf1;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.9em;
+            border: 2px dashed #ccc;
+            position: relative;
+        }
+
+        .seccion-ubicacion .ubicacion-container .mapa-visual iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* --- MODAL COMPARTIR --- */
+        .modal-compartir {
+            display: none;
+            position: fixed;
+            z-index: 1200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            animation: fadeIn 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-compartir.activo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .compartir-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 92%;
+            max-width: 400px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        .compartir-content .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #999;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        .compartir-content h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 1.3em;
+            padding-right: 25px;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .qr-container #qrCode {
+            display: inline-block;
+        }
+
+        .qr-label {
+            margin-top: 8px;
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        .compartir-botones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-compartir-whatsapp,
+        .btn-copiar-enlace {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-compartir-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .btn-copiar-enlace {
+            background: #667eea;
+            color: white;
+        }
+
+        .copiado-confirmacion {
+            display: none;
+            color: #25D366;
+            font-weight: bold;
+            margin-top: 8px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            color: #999;
+            margin-top: 10px;
+            padding: 15px;
+            font-size: 0.8em;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (min-width: 500px) {
+            .galeria {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+            .producto-item .producto-imagen-galeria {
+                height: 180px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .galeria {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+            .producto-item .producto-imagen-galeria {
+                height: 200px;
+            }
+            .modal-producto-content .modal-imagen {
+                height: 450px;
+            }
+            .banner-contenido h1 {
+                font-size: 2.2em;
+            }
+            .seccion-ubicacion .ubicacion-container .mapa-visual {
+                height: 250px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .galeria {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================== -->
+    <!-- PANTALLA DE BLOQUEO                        -->
+    <!-- ========================================== -->
+    <div id="pantallaBloqueo" class="pantalla-bloqueo">
+        <div class="icono-bloqueo">🔒</div>
+        <h2 id="tituloBloqueo">Catálogo No Autorizado</h2>
+        <p id="mensajeBloqueo">Este catálogo solo funciona en el dominio autorizado. Contacte al administrador.</p>
+        <a id="btnContactoBloqueo" class="btn-contacto-bloqueo" href="#" target="_blank">
+            💬 Contactar por WhatsApp
+        </a>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BANNER 50% SIN BOTÓN                       -->
+    <!-- ========================================== -->
+    <div class="banner-negocio" id="bannerNegocio">
+        <div class="banner-overlay"></div>
+        <div class="banner-contenido">
+            <h1 id="bannerNombre">superOnline</h1>
+            <p class="banner-descripcion" id="bannerTipo">Tecnología a tu alcance</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- HEADER DEL CATÁLOGO                        -->
+    <!-- ========================================== -->
+    <div class="header-catalogo">
+        <h2>🌟 Nuestro Catálogo</h2>
+        <p id="contadorProductos">0 Productos Exclusivos</p>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- GALERÍA DE PRODUCTOS                       -->
+    <!-- ========================================== -->
+    <main class="galeria" id="galeria">
+        <!-- Productos generados automáticamente -->
+    </main>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓN UBICACIÓN / MAPA (AL FINAL)        -->
+    <!-- ========================================== -->
+    <section class="seccion-ubicacion">
+        <div class="ubicacion-container">
+            <h3>📍 Nuestra Ubicación</h3>
+            <p>Encuéntranos fácilmente con Google Maps</p>
+            <a id="btnUbicacionFinal" href="#" class="btn-mapa" target="_blank">
+                🗺️ Ver en Google Maps
+            </a>
+            <div class="mapa-visual" id="mapaVisual">
+                <!-- Aquí se insertará el mapa -->
+                <span style="color:#999;">Cargando mapa...</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 <span id="footerNombre">superOnline</span> | Todos los derechos reservados</p>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- BOTÓN COMPARTIR FLOTANTE                   -->
+    <!-- ========================================== -->
+    <button class="btn-compartir-flotante" onclick="abrirModalCompartir()">
+        📱 Compartir
+    </button>
+
+    <!-- ========================================== -->
+    <!-- MODAL POP UP DE PRODUCTO                   -->
+    <!-- ========================================== -->
+    <div id="modalProducto" class="modal-producto">
+        <div class="modal-producto-content">
+            <button class="btn-cerrar-modal" onclick="cerrarModalProducto()">✕</button>
+            <div class="modal-imagen">
+                <img id="modalImagen" src="" alt="">
+            </div>
+            <div class="modal-detalles">
+                <h2 id="modalNombre"></h2>
+                <p class="modal-referencia" id="modalReferencia"></p>
+                <p class="modal-descripcion" id="modalDescripcion"></p>
+                <p class="modal-precio" id="modalPrecio"></p>
+                <span class="modal-tipo" id="modalTipo"></span>
+                <div class="modal-botones">
+                    <button class="btn-solicitar-modal" onclick="abrirModalContacto()">
+                        📱 Solicitar Información
+                    </button>
+                    <button class="btn-regresar" onclick="cerrarModalProducto()">
+                        ← Regresar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL DE CONTACTO                          -->
+    <!-- ========================================== -->
+    <div id="modalContacto" class="modal-contacto">
+        <div class="modal-contacto-content">
+            <button class="btn-cerrar-contacto" onclick="cerrarModalContacto()">&times;</button>
+            <h2>📱 Solicitar Información</h2>
+            <p id="productoSeleccionado"></p>
+            <div class="contacto-opciones">
+                <a id="whatsappLink" class="btn-whatsapp" target="_blank">
+                    💬 Contactar por WhatsApp
+                </a>
+                <a id="emailLink" class="btn-email">
+                    📧 Enviar Correo Electrónico
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL DE COMPARTIR                         -->
+    <!-- ========================================== -->
+    <div id="modalCompartir" class="modal-compartir">
+        <div class="compartir-content">
+            <button class="close" onclick="cerrarModalCompartir()">&times;</button>
+            <h2>📱 Compartir Catálogo</h2>
+            <p style="color:#666;font-size:0.9em;">Escanea el QR o comparte el enlace</p>
+            <div class="qr-container">
+                <div id="qrCode"></div>
+                <p class="qr-label">📸 Escanea para ver el catálogo</p>
+            </div>
+            <div class="compartir-botones">
+                <button class="btn-compartir-whatsapp" onclick="compartirPorWhatsApp()">
+                    💬 Compartir por WhatsApp
+                </button>
+                <button class="btn-copiar-enlace" onclick="copiarEnlace()">
+                    🔗 Copiar Enlace
+                </button>
+                <p id="copiadoConfirmacion" class="copiado-confirmacion">✅ ¡Enlace copiado!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- QR CODE LIBRARY                            -->
+    <!-- ========================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js">
+    </script>
+
+    <!-- ========================================== -->
+    <!-- CONFIGURACIÓN CENTRAL                      -->
+    <!-- ========================================== -->
+    <script>
+        const CONFIG = {
+            negocio: {
+                nombre: "superOnline",
+                tipo: "Tecnología a tu alcance",
+                imagenBanner: "imagenes/banner.jpg",
+                seo: {
+                    titulo: "superOnline - Catálogo de Productos",
+                    descripcion: "Descubre el catálogo de superOnline con productos de tecnología, hogar, deportes y moda. Calidad y precio en un solo lugar.",
+                    keywords: "catálogo, productos, tecnología, hogar, deportes, moda, superOnline, compras online",
+                    autor: "superOnline"
+                }
+            },
+            ubicacion: "https://maps.app.goo.gl/D9Xy7QEh2JFqhqKS6?g_st=ac",
+            whatsapp: "4424003376",
+            email: "proyectosolaronline@gmail.com",
+            dominioPermitido: "proyectosolaronline-ops.github.io",
+            mensajeBloqueo: "Catálogo no autorizado. Contacta a superOnline para activarlo.",
+            whatsappAdministrador: "4424003376"
+        };
+    </script>
+
+    <!-- ========================================== -->
+    <!-- PRODUCTOS                                  -->
+    <!-- ========================================== -->
+    <script>
+        const productos = [
+            {
+                id: 1,
+                nombre: "Auriculares Bluetooth Pro",
+                referencia: "REF-AUD-001",
+                descripcion: "Auriculares inalámbricos con cancelación de ruido activa y 30 horas de batería. Sonido premium y ajuste ergonómico para máxima comodidad.",
+                precio: "$89.99",
+                tipo: "Electrónica",
+                imagen: "imagenes/producto1.jpg"
+            },
+            {
+                id: 3,
+                nombre: "Botella Térmica Deportiva",
+                referencia: "REF-DEP-003",
+                descripcion: "Botella de acero inoxidable 750ml, mantiene temperatura 12 horas. Ideal para deportes y viajes, con tapa a prueba de fugas.",
+                precio: "$24.99",
+                tipo: "Deportes",
+                imagen: "imagenes/producto3.jpg"
+            },
+            {
+                id: 5,
+                nombre: "Mochila Urbana Premium",
+                referencia: "REF-MOD-005",
+                descripcion: "Mochila antirrobo con puerto USB, impermeable y 25L de capacidad. Diseño moderno con múltiples compartimentos.",
+                precio: "$59.99",
+                tipo: "Moda",
+                imagen: "imagenes/producto5.jpg"
+            },
+            {
+                id: 6,
+                nombre: "Organizador de Escritorio",
+                referencia: "REF-HOG-006",
+                descripcion: "Organizador de bambú con cargador inalámbrico integrado. Perfecto para mantener tu escritorio ordenado y con estilo.",
+                precio: "$34.99",
+                tipo: "Hogar",
+                imagen: "imagenes/producto6.jpg"
+            },
+            {
+                id: 8,
+                nombre: "Cámara de Seguridad WiFi",
+                referencia: "REF-ELE-008",
+                descripcion: "Cámara 360° con visión nocturna y detección de movimiento. Monitorea tu hogar desde cualquier lugar con la app.",
+                precio: "$69.99",
+                tipo: "Electrónica",
+                imagen: "imagenes/producto8.jpg"
+            },
+            {
+                id: 9,
+                nombre: "Gafas de Sol Polarizadas",
+                referencia: "REF-MOD-009",
+                descripcion: "Gafas UV400 con protección polarizada y estuche premium. Diseño elegante y ligero para uso diario.",
+                precio: "$39.99",
+                tipo: "Moda",
+                imagen: "imagenes/producto9.jpg"
+            },
+            {
+                id: 11,
+                nombre: "Esterilla Yoga Antideslizante",
+                referencia: "REF-DEP-011",
+                descripcion: "Esterilla ecológica TPE 6mm con correa de transporte. Antideslizante y cómoda para tus prácticas de yoga.",
+                precio: "$32.99",
+                tipo: "Deportes",
+                imagen: "imagenes/producto11.jpg"
+            },
+            {
+                id: 12,
+                nombre: "Cargador Inalámbrico Rápido",
+                referencia: "REF-ELE-012",
+                descripcion: "Cargador 15W compatible con todos los smartphones Qi. Carga rápida y segura con protección contra sobrecalentamiento.",
+                precio: "$27.99",
+                tipo: "Electrónica",
+                imagen: "imagenes/producto12.jpg"
+            }
+        ];
+    </script>
+
+    <!-- ========================================== -->
+    <!-- LÓGICA PRINCIPAL                           -->
+    <!-- ========================================== -->
+    <script>
+        // ==========================================
+        // 🔒 VERIFICADOR DE DOMINIO
+        // ==========================================
+        (function() {
+            const dominioActual = window.location.hostname;
+            const dominioPermitido = CONFIG.dominioPermitido;
+
+            if (dominioActual === '' || dominioActual === 'localhost' || dominioActual === '127.0.0.1') {
+                return;
+            }
+
+            if (dominioActual !== dominioPermitido) {
+                document.getElementById('pantallaBloqueo').classList.add('activo');
+                document.getElementById('mensajeBloqueo').textContent = CONFIG.mensajeBloqueo;
+                document.getElementById('btnContactoBloqueo').href =
+                    `https://wa.me/${CONFIG.whatsappAdministrador}?text=Hola,%20necesito%20activar%20mi%20catálogo`;
+
+                document.querySelectorAll('body > *:not(#pantallaBloqueo)').forEach(el => {
+                    el.style.display = 'none';
+                });
+
+                throw new Error('Dominio no autorizado');
+            }
+        })();
+
+        // ==========================================
+        // ACTUALIZAR META TAGS CON CONFIG
+        // ==========================================
+        (function actualizarMetaTags() {
+            const seo = CONFIG.negocio.seo;
+            const urlActual = window.location.href;
+            
+            document.title = seo.titulo;
+            document.getElementById('metaTitulo')?.setAttribute('content', seo.titulo);
+            document.getElementById('metaDescripcion')?.setAttribute('content', seo.descripcion);
+            document.getElementById('ogDescripcion')?.setAttribute('content', seo.descripcion);
+            document.getElementById('twitterDescripcion')?.setAttribute('content', seo.descripcion);
+            document.getElementById('metaKeywords')?.setAttribute('content', seo.keywords);
+            document.getElementById('metaAutor')?.setAttribute('content', seo.autor);
+            document.getElementById('ogUrl')?.setAttribute('content', urlActual);
+            document.getElementById('ogTitulo')?.setAttribute('content', seo.titulo);
+            document.getElementById('ogSiteName')?.setAttribute('content', CONFIG.negocio.nombre);
+            document.getElementById('ogImagen')?.setAttribute('content', CONFIG.negocio.imagenBanner);
+            document.getElementById('twitterUrl')?.setAttribute('content', urlActual);
+            document.getElementById('twitterTitulo')?.setAttribute('content', seo.titulo);
+            document.getElementById('twitterImagen')?.setAttribute('content', CONFIG.negocio.imagenBanner);
+            
+            const jsonLd = document.getElementById('jsonLd');
+            if (jsonLd) {
+                try {
+                    const data = JSON.parse(jsonLd.textContent);
+                    data.name = CONFIG.negocio.nombre;
+                    data.url = urlActual;
+                    data.description = seo.descripcion;
+                    jsonLd.textContent = JSON.stringify(data);
+                } catch(e) {}
+            }
+        })();
+
+        // ==========================================
+        // APLICAR CONFIGURACIÓN
+        // ==========================================
+        document.getElementById('bannerNegocio').style.backgroundImage = `url('${CONFIG.negocio.imagenBanner}')`;
+        document.getElementById('bannerNombre').textContent = CONFIG.negocio.nombre;
+        document.getElementById('bannerTipo').textContent = CONFIG.negocio.tipo;
+        document.getElementById('footerNombre').textContent = CONFIG.negocio.nombre;
+        
+        // Botón de ubicación al final
+        document.getElementById('btnUbicacionFinal').href = CONFIG.ubicacion;
+
+        // Cargar mapa visual
+        function cargarMapa() {
+            const mapaDiv = document.getElementById('mapaVisual');
+            // Extraer coordenadas del link de Google Maps o usar embed
+            const ubicacion = CONFIG.ubicacion;
+            // Intentar extraer coordenadas o usar un embed genérico
+            const embedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.0!2d-99.1332!3d19.4326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDI1JzU3LjQiTiA5OcKwMDcnNTkuMiJX!5e0!3m2!1ses!2smx!4v1700000000000`;
+            
+            // Usar un mapa estático de Google Maps
+            mapaDiv.innerHTML = `
+                <iframe 
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(CONFIG.negocio.nombre)}"
+                    loading="lazy"
+                    allowfullscreen>
+                </iframe>
+            `;
+        }
+
+        // ==========================================
+        // VARIABLES GLOBALES
+        // ==========================================
+        let productoActual = null;
+
+        // ==========================================
+        // GENERAR GALERÍA (SOLO PRODUCTOS CON IMAGEN)
+        // ==========================================
+        function generarGaleria() {
+            const galeria = document.getElementById('galeria');
+
+            const productosConImagen = productos.filter(p => p.imagen && p.imagen.trim() !== '');
+
+            document.getElementById('contadorProductos').textContent =
+                `${productosConImagen.length} Productos Exclusivos`;
+
+            if (productosConImagen.length === 0) {
+                galeria.innerHTML = `
+                    <div class="sin-productos">
+                        <h3>📷 No hay productos disponibles</h3>
+                        <p>Pronto agregaremos nuevos productos con imágenes.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            productosConImagen.forEach(producto => {
+                const item = document.createElement('div');
+                item.className = 'producto-item';
+                item.innerHTML = `
+                    <div class="producto-imagen-galeria">
+                        <img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy"
+                             onerror="this.parentElement.parentElement.style.display='none'">
+                    </div>
+                    <div class="producto-nombre-galeria">${producto.nombre}</div>
+                    <div class="producto-overlay">👁️ Ver</div>
+                `;
+                item.addEventListener('click', () => abrirModalProducto(producto.id));
+                galeria.appendChild(item);
+            });
+        }
+
+        // ==========================================
+        // ABRIR MODAL POP UP DE PRODUCTO
+        // ==========================================
+        function abrirModalProducto(productoId) {
+            const producto = productos.find(p => p.id === productoId);
+            if (!producto) return;
+
+            productoActual = producto;
+
+            document.getElementById('modalImagen').src = producto.imagen;
+            document.getElementById('modalNombre').textContent = producto.nombre;
+            document.getElementById('modalReferencia').textContent = `📋 ${producto.referencia}`;
+            document.getElementById('modalDescripcion').textContent = producto.descripcion;
+            document.getElementById('modalPrecio').textContent = `💰 ${producto.precio}`;
+            document.getElementById('modalTipo').textContent = `🏷️ ${producto.tipo}`;
+
+            document.getElementById('modalProducto').classList.add('activo');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ==========================================
+        // CERRAR MODAL POP UP
+        // ==========================================
+        function cerrarModalProducto() {
+            document.getElementById('modalProducto').classList.remove('activo');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ==========================================
+        // ABRIR MODAL DE CONTACTO
+        // ==========================================
+        function abrirModalContacto() {
+            if (!productoActual) return;
+
+            const producto = productoActual;
+            const productoSeleccionado = document.getElementById('productoSeleccionado');
+            const whatsappLink = document.getElementById('whatsappLink');
+            const emailLink = document.getElementById('emailLink');
+
+            productoSeleccionado.innerHTML = `
+                <strong>${producto.nombre}</strong><br>
+                📋 Ref: ${producto.referencia}<br>
+                💰 Precio: ${producto.precio}<br>
+                🏷️ Tipo: ${producto.tipo}
+            `;
+
+            const mensajeWhatsApp =
+                `¡Hola! Me interesa el producto:%0A%0A*${producto.nombre}*%0A📋 Ref: ${producto.referencia}%0A💰 Precio: ${producto.precio}%0A%0A¿Podrían darme más información?`;
+            whatsappLink.href = `https://wa.me/${CONFIG.whatsapp}?text=${mensajeWhatsApp}`;
+
+            const asuntoEmail = `Consulta sobre ${producto.nombre} - ${producto.referencia}`;
+            const cuerpoEmail =
+                `Hola,%0D%0A%0D%0AMe gustaría recibir más información sobre:%0D%0A%0D%0ANombre: ${producto.nombre}%0D%0ARef: ${producto.referencia}%0D%0APrecio: ${producto.precio}%0D%0ATipo: ${producto.tipo}%0D%0ADescripción: ${producto.descripcion}`;
+            emailLink.href =
+                `mailto:${CONFIG.email}?subject=${encodeURIComponent(asuntoEmail)}&body=${cuerpoEmail}`;
+
+            document.getElementById('modalContacto').classList.add('activo');
+        }
+
+        function cerrarModalContacto() {
+            document.getElementById('modalContacto').classList.remove('activo');
+        }
+
+        // ==========================================
+        // MODAL COMPARTIR
+        // ==========================================
+        function abrirModalCompartir() {
+            document.getElementById('modalCompartir').classList.add('activo');
+            document.body.style.overflow = 'hidden';
+            generarQR();
+        }
+
+        function cerrarModalCompartir() {
+            document.getElementById('modalCompartir').classList.remove('activo');
+            document.body.style.overflow = 'auto';
+        }
+
+        function generarQR() {
+            document.getElementById('qrCode').innerHTML = '';
+            new QRCode(document.getElementById('qrCode'), {
+                text: window.location.href,
+                width: 180,
+                height: 180,
+                colorDark: '#764ba2',
+                colorLight: '#ffffff'
+            });
+        }
+
+        function compartirPorWhatsApp() {
+            const mensaje = `¡Mira este catálogo! 👀%0A%0A${CONFIG.negocio.nombre}%0A%0A${window.location.href}`;
+            window.open(`https://wa.me/?text=${mensaje}`, '_blank');
+        }
+
+        function copiarEnlace() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                const confirmacion = document.getElementById('copiadoConfirmacion');
+                confirmacion.style.display = 'block';
+                setTimeout(() => {
+                    confirmacion.style.display = 'none';
+                }, 2500);
+            });
+        }
+
+        // ==========================================
+        // CERRAR MODALES CON ESC
+        // ==========================================
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                cerrarModalProducto();
+                cerrarModalContacto();
+                cerrarModalCompartir();
+            }
+        });
+
+        // ==========================================
+        // CERRAR MODAL CLIC FUERA
+        // ==========================================
+        document.getElementById('modalProducto').addEventListener('click', function(e) {
+            if (e.target === this) cerrarModalProducto();
+        });
+
+        document.getElementById('modalContacto').addEventListener('click', function(e) {
+            if (e.target === this) cerrarModalContacto();
+        });
+
+        document.getElementById('modalCompartir').addEventListener('click', function(e) {
+            if (e.target === this) cerrarModalCompartir();
+        });
+
+        // ==========================================
+        // INICIAR
+        // ==========================================
+        window.onload = function() {
+            generarGaleria();
+            cargarMapa();
+        };
+    </script>
+
+</body>
+</html>
